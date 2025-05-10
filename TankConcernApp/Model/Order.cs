@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TankConcernApp.Models;
+namespace TankConcernApp.Model;
 
 public partial class Order
 {

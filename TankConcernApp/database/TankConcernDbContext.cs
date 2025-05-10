@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using TankConcernApp.Model;
 
-namespace TankConcernApp.Models;
+namespace TankConcernApp.database;
 
 public partial class TankConcernDbContext : DbContext
 {
@@ -59,7 +60,7 @@ public partial class TankConcernDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-2D1FGK3;Database=TankConcernDB;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-2D1FGK3;Database=TankConcernDB;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -172,15 +173,15 @@ public partial class TankConcernDbContext : DbContext
 
             entity.ToTable("PartsInventory");
 
-            entity.HasOne(d => d.Part).WithMany(p => p.PartsInventories)
-                .HasForeignKey(d => d.PartId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PartsInventory_TankParts");
-
             entity.HasOne(d => d.PartType).WithMany(p => p.PartsInventories)
                 .HasForeignKey(d => d.PartTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PartsInventory_PartTypes");
+
+            entity.HasOne(d => d.TankPart).WithMany(p => p.PartsInventories)
+                .HasForeignKey(d => d.TankPartId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PartsInventory_TankParts");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -245,8 +246,6 @@ public partial class TankConcernDbContext : DbContext
 
         modelBuilder.Entity<TankPart>(entity =>
         {
-            entity.HasKey(e => e.TaksPartId);
-
             entity.HasOne(d => d.PartType).WithMany(p => p.TankParts)
                 .HasForeignKey(d => d.PartTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

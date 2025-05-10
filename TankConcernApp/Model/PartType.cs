@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using TankConcernApp.Model;
 
-namespace TankConcernApp.Models;
+namespace TankConcernApp;
 
 public partial class PartType
 {

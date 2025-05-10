@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TankConcernApp.Models;
+namespace TankConcernApp.Model;
 
 public partial class PartsInventory
 {
     public long InvertoryId { get; set; }
 
-    public long PartId { get; set; }
+    public long TankPartId { get; set; }
 
     public long Count { get; set; }
 
@@ -15,7 +15,7 @@ public partial class PartsInventory
 
     public long PartTypeId { get; set; }
 
-    public virtual TankPart Part { get; set; } = null!;
-
     public virtual PartType PartType { get; set; } = null!;
+
+    public virtual TankPart TankPart { get; set; } = null!;
 }

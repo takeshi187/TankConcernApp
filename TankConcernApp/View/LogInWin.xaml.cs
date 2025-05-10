@@ -11,11 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TankConcernApp.database;
+using TankConcernApp.View;
 
 namespace TankConcernApp
 {
     public partial class LogInWin : Window
     {
+        TankConcernDbContext dbContext = new TankConcernDbContext();
         public LogInWin()
         {
             InitializeComponent();
@@ -23,6 +26,45 @@ namespace TankConcernApp
 
         private void Btn_Entry_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                string username = TxtBox_Login.Text.Trim();
+                string password = PassBox_Password.Password.Trim();
+
+                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+                {
+                    MessageBox.Show("Введите логин и пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var user = dbContext.Users.FirstOrDefault(u => u.Login == username && u.Password == password);
+                if (user != null)
+                {
+                    var roleId = user.RoleId;
+                    var lastname = dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
+                    user.LastLogin = DateOnly.FromDateTime(DateTime.Now);
+                    switch (roleId)
+                    {
+                        case 1:
+                            MessageBox.Show($"Добро пожаловать! Администратор: {lastname.LastName}");
+                            AdminWin adminWin = new AdminWin();
+                            adminWin.Show();
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при авторизации: ", ex.Message);
+            }
 
         }
 

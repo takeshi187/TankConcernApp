@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TankConcernApp.Models;
+namespace TankConcernApp.Model;
 
 public partial class TankPart
 {
-    public long TaksPartId { get; set; }
+    public long TankPartId { get; set; }
 
     public string TankPartName { get; set; } = null!;
 
