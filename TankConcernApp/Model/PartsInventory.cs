@@ -5,7 +5,7 @@ namespace TankConcernApp.Model;
 
 public partial class PartsInventory
 {
-    public long InvertoryId { get; set; }
+    public long InventoryId { get; set; }
 
     public long TankPartId { get; set; }
 

@@ -17,6 +17,8 @@ public partial class Order
 
     public int Count { get; set; }
 
+    public decimal TotalPrice { get; set; }
+
     public virtual Customer Customer { get; set; } = null!;
 
     public virtual OrderStatus OrderStatus { get; set; } = null!;

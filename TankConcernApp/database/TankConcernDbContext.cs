@@ -22,6 +22,8 @@ public partial class TankConcernDbContext : DbContext
 
     public virtual DbSet<Customer> Customers { get; set; }
 
+    public virtual DbSet<CustomerType> CustomerTypes { get; set; }
+
     public virtual DbSet<Employee> Employees { get; set; }
 
     public virtual DbSet<EmployeeBrigade> EmployeeBrigades { get; set; }
@@ -60,7 +62,7 @@ public partial class TankConcernDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-2D1FGK3;Database=TankConcernDB;Trusted_Connection=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-2D1FGK3;Database=TankConcernDB;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -83,6 +85,17 @@ public partial class TankConcernDbContext : DbContext
                 .HasForeignKey(d => d.WorkshopId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_BrigadeWorkshopAssignments_Workshops");
+        });
+
+        modelBuilder.Entity<Customer>(entity =>
+        {
+            entity.Property(e => e.Country).HasMaxLength(100);
+            entity.Property(e => e.Email).HasMaxLength(100);
+
+            entity.HasOne(d => d.CustomerType).WithMany(p => p.Customers)
+                .HasForeignKey(d => d.CustomerTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Customers_CustomerTypes");
         });
 
         modelBuilder.Entity<Employee>(entity =>
@@ -145,6 +158,7 @@ public partial class TankConcernDbContext : DbContext
         modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(e => e.OrderStatusId).HasDefaultValue(1L);
+            entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 0)");
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.CustomerId)
@@ -169,7 +183,7 @@ public partial class TankConcernDbContext : DbContext
 
         modelBuilder.Entity<PartsInventory>(entity =>
         {
-            entity.HasKey(e => e.InvertoryId);
+            entity.HasKey(e => e.InventoryId);
 
             entity.ToTable("PartsInventory");
 

@@ -65,7 +65,6 @@ namespace TankConcernApp
             {
                 MessageBox.Show("Ошибка при авторизации: ", ex.Message);
             }
-
         }
 
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)

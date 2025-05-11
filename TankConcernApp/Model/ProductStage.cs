@@ -13,7 +13,7 @@ public partial class ProductStage
 
     public long OrderId { get; set; }
 
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
     public virtual Order Order { get; set; } = null!;
 
