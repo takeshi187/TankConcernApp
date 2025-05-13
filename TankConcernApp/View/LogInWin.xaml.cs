@@ -58,7 +58,11 @@ namespace TankConcernApp
                             break;
                         case 5:
                             break;
+                        default:
+                            MessageBox.Show("Такой роли не существует!");
+                            break;
                     }
+                    this.Close();
                 }
             }
             catch (Exception ex)
