@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TankConcernApp"
         mc:Ignorable="d"
-        Title="LogInWin" Height="400" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Авторизация" Height="400" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -22,9 +22,9 @@
         </StackPanel>
 
         <Label Grid.Row="1" FontSize="18">Логин: </Label>
-        <TextBox x:Name="TxtBox_Login" Grid.Row="2" Background="LightGray" Margin="10" FontSize="18"/>
+        <TextBox x:Name="TxtBox_Login" Grid.Row="2" Height="35" Background="LightGray" Margin="10" FontSize="18"/>
         <Label Grid.Row="3" FontSize="18">Пароль: </Label>
-        <PasswordBox x:Name="PassBox_Password" Grid.Row="4" Background="LightGray" Margin="10" FontSize="18"/>
+        <PasswordBox x:Name="PassBox_Password" Grid.Row="4" Height="35" Background="LightGray" Margin="10" FontSize="18"/>
 
         <Button x:Name="Btn_Entry" Grid.Row="5" Content="Войти" Width="100" Margin="10" HorizontalAlignment="Left" Click="Btn_Entry_Click"/>
         <Button x:Name="Btn_Exit" Grid.Row="5" Content="Выход" Width="100" Margin="10" HorizontalAlignment="Center" Click="Btn_Exit_Click"/>

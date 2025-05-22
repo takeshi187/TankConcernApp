@@ -9,7 +9,7 @@
         </Style>
 
         <Style TargetType="StackPanel">
-            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="Background" Value="LightGreen"/>
         </Style>
     </Application.Resources>
 </Application>
