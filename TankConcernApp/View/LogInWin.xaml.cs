@@ -18,7 +18,7 @@ namespace TankConcernApp
             {
                 string username = TxtBox_Login.Text.Trim();
                 string password = PassBox_Password.Password.Trim();
-
+      
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 {
                     MessageBox.Show("Введите логин и пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -29,28 +29,34 @@ namespace TankConcernApp
                 if (user != null)
                 {
                     var roleId = user.RoleId;
-                    var lastname = dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
-                    user.LastLogin = DateOnly.FromDateTime(DateTime.Now);
-                    switch (roleId)
+                    var employee = dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
+                    if (employee.EmployeeStatusId == 3)
+                        MessageBox.Show("Вы уволены и не можете авторизоваться в системе!");
+                    else
                     {
-                        case 1:
-                            MessageBox.Show($"Добро пожаловать! Администратор: {lastname.LastName}");
-                            AdminWin adminWin = new AdminWin();
-                            adminWin.Show();
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
-                        default:
-                            MessageBox.Show("Такой роли не существует!");
-                            break;
-                    }
-                    this.Close();
+                        user.LastLogin = DateOnly.FromDateTime(DateTime.Now);
+                        dbContext.SaveChanges();
+                        switch (roleId)
+                        {
+                            case 1:
+                                MessageBox.Show($"Добро пожаловать! Администратор: {employee.LastName}");
+                                AdminWin adminWin = new AdminWin();
+                                adminWin.Show();
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                            default:
+                                MessageBox.Show("Такой роли не существует!");
+                                break;
+                        }
+                        this.Close();
+                    }                
                 }
             }
             catch (Exception ex)
