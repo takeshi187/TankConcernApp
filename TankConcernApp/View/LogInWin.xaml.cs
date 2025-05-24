@@ -18,7 +18,7 @@ namespace TankConcernApp
             {
                 string username = TxtBox_Login.Text.Trim();
                 string password = PassBox_Password.Password.Trim();
-      
+
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 {
                     MessageBox.Show("Введите логин и пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -48,6 +48,9 @@ namespace TankConcernApp
                             case 3:
                                 break;
                             case 4:
+                                MessageBox.Show($"Добро пожаловать! Менеджер по производству: {employee.LastName}");
+                                ProdManagerWin prodManagerWin = new ProdManagerWin();
+                                prodManagerWin.Show();
                                 break;
                             case 5:
                                 break;
@@ -56,7 +59,7 @@ namespace TankConcernApp
                                 break;
                         }
                         this.Close();
-                    }                
+                    }
                 }
             }
             catch (Exception ex)

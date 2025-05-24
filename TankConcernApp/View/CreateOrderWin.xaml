@@ -1,0 +1,45 @@
+﻿<Window x:Class="TankConcernApp.View.CreateOrderWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TankConcernApp.View"
+        mc:Ignorable="d"
+        Title="Создать заказ" Height="300" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="5" Grid.ColumnSpan="2">
+            <Label HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20">Создать заказ</Label>
+        </StackPanel>
+
+        <Label Grid.Row="1" Grid.Column="0" Margin="5" FontSize="18">Заказчик:</Label>
+        <ComboBox x:Name="ComboBox_Customers" Grid.Row="1" Grid.Column="1" Margin="5" Height="30" FontSize="16"/>
+
+        <Label Grid.Row="2" Grid.Column="0"  Margin="5" FontSize="18">Продукт:</Label>
+        <ComboBox x:Name="ComboBox_Products" Grid.Row="2" Grid.Column="1" Margin="5" Height="30" FontSize="16"/>
+
+        <Label Grid.Row="3" Grid.Column="0" Margin="5" FontSize="18">Количество:</Label>
+        <TextBox x:Name="TextBox_Count" Grid.Row="3" Grid.Column="1" Margin="5" Height="30" FontSize="16"/>
+
+        <Label Grid.Row="4" Grid.Column="0" Margin="5" FontSize="18">Цена:</Label>
+        <TextBox x:Name="TextBox_Price" Grid.Row="4" Grid.Column="1" Margin="5" Height="30" FontSize="16"/>
+        
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button x:Name="Btn_CreateOrder" Content="Создать заказ" Margin="5" Height="35" Width="120" Click="Btn_CreateOrder_Click"/>
+        </StackPanel>
+        
+        <Button x:Name="Btn_Back" Content="Назад" Margin="5" Height="35" Width="120" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" Click="Btn_Back_Click"/>
+    </Grid>
+</Window>

@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Windows;
+﻿using System.Windows;
 using TankConcernApp.database;
 using TankConcernApp.Model;
 
@@ -46,7 +45,7 @@ namespace TankConcernApp.View
         {
             try
             {
-                if(ComboBox_EmployeeId.SelectedValue == null || ComboBox_RoleId.SelectedValue == null)
+                if (ComboBox_EmployeeId.SelectedValue == null || ComboBox_RoleId.SelectedValue == null)
                 {
                     MessageBox.Show("Все поля должны быть заполнены!");
                     return;
@@ -87,10 +86,10 @@ namespace TankConcernApp.View
 
                 MessageBox.Show("Пользователь успешно добавлен!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при добавлении пользователей: {ex.Message}");
-            }            
+            }
         }
 
         private void Btn_Back_Click(object sender, RoutedEventArgs e)
