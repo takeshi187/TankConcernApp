@@ -1,4 +1,7 @@
-﻿namespace TankConcernApp.Model;
+﻿using System;
+using System.Collections.Generic;
+
+namespace TankConcernApp.Model;
 
 public partial class EmployeeBrigade
 {
@@ -13,8 +16,6 @@ public partial class EmployeeBrigade
     public long OldBrigadeId { get; set; }
 
     public virtual Brigade Brigade { get; set; } = null!;
-
-    public virtual ICollection<BrigadeWorkshopAssignment> BrigadeWorkshopAssignments { get; set; } = new List<BrigadeWorkshopAssignment>();
 
     public virtual Employee Employee { get; set; } = null!;
 }

@@ -1,12 +1,13 @@
 ﻿using System.Windows;
 using TankConcernApp.database;
+using TankConcernApp.Model;
 using TankConcernApp.View;
 
 namespace TankConcernApp
 {
     public partial class LogInWin : Window
     {
-        private readonly TankConcernDbContext dbContext = new TankConcernDbContext();
+        private readonly TankConcernDbContext _dbContext = new TankConcernDbContext();
         public LogInWin()
         {
             InitializeComponent();
@@ -25,17 +26,17 @@ namespace TankConcernApp
                     return;
                 }
 
-                var user = dbContext.Users.FirstOrDefault(u => u.Login == username && u.Password == password);
+                var user = _dbContext.Users.FirstOrDefault(u => u.Login == username && u.Password == password);
                 if (user != null)
                 {
                     var roleId = user.RoleId;
-                    var employee = dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
+                    var employee = _dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
                     if (employee.EmployeeStatusId == 3)
                         MessageBox.Show("Вы уволены и не можете авторизоваться в системе!");
                     else
                     {
                         user.LastLogin = DateOnly.FromDateTime(DateTime.Now);
-                        dbContext.SaveChanges();
+                        _dbContext.SaveChanges();
                         switch (roleId)
                         {
                             case 1:
@@ -46,6 +47,7 @@ namespace TankConcernApp
                             case 2:
                                 break;
                             case 3:
+                                CheckHeadOfWorkshop(user);
                                 break;
                             case 4:
                                 MessageBox.Show($"Добро пожаловать! Менеджер по производству: {employee.LastName}");
@@ -65,6 +67,46 @@ namespace TankConcernApp
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при авторизации: ", ex.Message);
+            }
+        }
+
+        private void CheckHeadOfWorkshop(User user)
+        {
+            var roleId = user.RoleId;
+            var employee = _dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
+            var brigadeId = _dbContext.EmployeeBrigades
+                .Where(b => b.EmployeeId == employee.EmployeeId)
+                .Select(b => b.BrigadeId)
+                .FirstOrDefault();
+            var workshopId = _dbContext.BrigadeWorkshopAssignments
+                .Where(w => w.BrigadeId == brigadeId)
+                .Select (w => w.WorkshopId)
+                .FirstOrDefault();
+            var workshopType = _dbContext.WorkshopTypes.FirstOrDefault(w => w.WorkshopTypeId == workshopId);
+            if (workshopType != null)
+            {
+                switch(workshopType.WorkshopTypeId)
+                {
+                    case 1:
+                        MessageBox.Show($"Добро пожаловать в сборочный цех! Начальник цеха: {employee.LastName}");
+                        AssemblyShopWin assemblyShopWin = new AssemblyShopWin(workshopId);
+                        assemblyShopWin.Show();
+                        this.Close();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        MessageBox.Show("Такой роли не существует!");
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ошибка при авторизации workshop");
             }
         }
 

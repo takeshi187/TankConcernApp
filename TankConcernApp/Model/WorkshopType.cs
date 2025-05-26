@@ -1,4 +1,7 @@
-﻿namespace TankConcernApp.Model;
+﻿using System;
+using System.Collections.Generic;
+
+namespace TankConcernApp.Model;
 
 public partial class WorkshopType
 {

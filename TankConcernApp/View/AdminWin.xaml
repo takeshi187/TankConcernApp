@@ -25,7 +25,7 @@
           Margin="5"
           SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding EmployeeId}" Width="Auto"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding EmployeeId}" Width="50"/>
                 <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="*"/>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*"/>
                 <DataGridTextColumn Header="Должность" Binding="{Binding EmployeePostName}" Width="*"/>

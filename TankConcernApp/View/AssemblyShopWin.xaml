@@ -1,0 +1,37 @@
+﻿<Window x:Class="TankConcernApp.View.AssemblyShopWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TankConcernApp.View"
+        mc:Ignorable="d"
+        Title="Сборочный цех" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="5">
+            <Label HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20">Сборочный цех</Label>
+        </StackPanel>
+
+        <DataGrid x:Name="DGOrders" AutoGenerateColumns="False" Grid.Row="1" Margin="10" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding OrderId}" Width="50"/>
+                <DataGridTextColumn Header="Заказчик" Binding="{Binding CustomerName}" Width="*"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding OrderDate}" Width="*"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding OrderStatusName}" Width="*"/>
+                <DataGridTextColumn Header="Продукт" Binding="{Binding ProductName}" Width="*"/>
+                <DataGridTextColumn Header="Количество" Binding="{Binding Count}" Width="*"/>
+                <DataGridTextColumn Header="Итого" Binding="{Binding TotalPrice}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Margin="5" Orientation="Horizontal">
+            <Button x:Name="Btn_AcceptOrder" Content="Принять заказ" Margin="5" Width="184" Height="35" Click="Btn_AcceptOrder_Click"/>
+            <Label FontSize="18" Margin="350,10,0,10">Id цеха:</Label>
+            <TextBox x:Name="TxtBox_WorkshoId" Width="100" Height="30" FontSize="18" Margin="10,10,0,10" IsReadOnly="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

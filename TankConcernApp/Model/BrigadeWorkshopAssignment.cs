@@ -1,4 +1,7 @@
-﻿namespace TankConcernApp.Model;
+﻿using System;
+using System.Collections.Generic;
+
+namespace TankConcernApp.Model;
 
 public partial class BrigadeWorkshopAssignment
 {
@@ -9,8 +12,6 @@ public partial class BrigadeWorkshopAssignment
     public DateOnly AssignmentDate { get; set; }
 
     public DateOnly EndDate { get; set; }
-
-    public virtual EmployeeBrigade Brigade { get; set; } = null!;
 
     public virtual ICollection<ProductionLog> ProductionLogs { get; set; } = new List<ProductionLog>();
 

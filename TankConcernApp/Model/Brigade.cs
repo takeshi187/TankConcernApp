@@ -1,4 +1,7 @@
-﻿namespace TankConcernApp.Model;
+﻿using System;
+using System.Collections.Generic;
+
+namespace TankConcernApp.Model;
 
 public partial class Brigade
 {
@@ -6,5 +9,5 @@ public partial class Brigade
 
     public string? Description { get; set; }
 
-    public virtual EmployeeBrigade? EmployeeBrigade { get; set; }
+    public virtual ICollection<EmployeeBrigade> EmployeeBrigades { get; set; } = new List<EmployeeBrigade>();
 }
