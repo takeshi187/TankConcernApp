@@ -78,5 +78,10 @@ namespace TankConcernApp.View
                 MessageBox.Show("Пожалуйста, выберите заказ!");
             }
         }
+
+        private void Btn_Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

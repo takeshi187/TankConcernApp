@@ -94,6 +94,10 @@ namespace TankConcernApp
                         this.Close();
                         break;
                     case 2:
+                        MessageBox.Show($"Добро пожаловать в покрасочный цех! Начальник цеха: {employee.LastName}");
+                        PaintingShopWin paintingShopWin = new PaintingShopWin(workshopId);
+                        paintingShopWin.Show();
+                        this.Close();
                         break;
                     case 3:
                         break;

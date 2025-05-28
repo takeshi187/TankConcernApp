@@ -17,7 +17,7 @@
             <Label HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20">Сборочный цех</Label>
         </StackPanel>
 
-        <DataGrid x:Name="DGOrders" AutoGenerateColumns="False" Grid.Row="1" Margin="10" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid x:Name="DGOrders" AutoGenerateColumns="False" Grid.Row="1" Margin="5" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding OrderId}" Width="50"/>
                 <DataGridTextColumn Header="Заказчик" Binding="{Binding CustomerName}" Width="*"/>
@@ -30,7 +30,8 @@
         </DataGrid>
         <StackPanel Grid.Row="2" Margin="5" Orientation="Horizontal">
             <Button x:Name="Btn_AcceptOrder" Content="Принять заказ" Margin="5" Width="184" Height="35" Click="Btn_AcceptOrder_Click"/>
-            <Label FontSize="18" Margin="350,10,0,10">Id цеха:</Label>
+            <Button x:Name="Btn_Exit" Content="Выход" Margin="5" Width="184" Height="35" Click="Btn_Exit_Click"/>
+            <Label FontSize="18" Margin="200,10,0,10">Id цеха:</Label>
             <TextBox x:Name="TxtBox_WorkshoId" Width="100" Height="30" FontSize="18" Margin="10,10,0,10" IsReadOnly="True"/>
         </StackPanel>
     </Grid>

@@ -10,10 +10,6 @@ namespace TankConcernApp.View
         public AdminWin()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
             LoadEmployees();
         }
 

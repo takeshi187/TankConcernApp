@@ -31,9 +31,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="3" Margin="5" Orientation="Horizontal">
-            <Button x:Name="Btn_AddUser" Margin="5" Width="184" Content="Добавить пользователя" Click="Btn_AddUser_Click"/>
             <Button x:Name="Btn_EditStatus" Margin="5" Width="184" Content="Изменить статус" Click="Btn_EditStatus_Click"/>
-            <Button x:Name="Btn_CreateOrder" Margin="5" Width="184" Content="Создать заказ" Click="Btn_CreateOrder_Click"/>
             <Button x:Name="Btn_Exit" Margin="5" Width="184" Content="Выйти" Click="Btn_Exit_Click"/>
         </StackPanel>
     </Grid>
