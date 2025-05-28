@@ -100,6 +100,10 @@ namespace TankConcernApp
                         this.Close();
                         break;
                     case 3:
+                        MessageBox.Show($"Добро пожаловать в цех тестирования! Начальник цеха: {employee.LastName}");
+                        TestingShopWin testingShopWin = new TestingShopWin(workshopId);
+                        testingShopWin.Show();
+                        this.Close();
                         break;
                     case 4:
                         break;

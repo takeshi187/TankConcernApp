@@ -17,11 +17,11 @@ using TankConcernApp.Model;
 
 namespace TankConcernApp.View
 {
-    public partial class PaintingShopWin : Window
+    public partial class TestingShopWin : Window
     {
         private readonly TankConcernDbContext _dbContext = new TankConcernDbContext();
         private readonly long _WorkshopId;
-        public PaintingShopWin(long workshopId)
+        public TestingShopWin(long workshopId)
         {
             InitializeComponent();
             _WorkshopId = workshopId;
@@ -34,17 +34,17 @@ namespace TankConcernApp.View
             var productStages = _dbContext.ProductStages
                 .Include(s => s.ProductStageType)
                 .Include(s => s.Workshop)
-                .Where(s => s.ProductStageTypeId == 3 && s.Workshop.WorkshopTypeId == 1)
+                .Where(s => s.ProductStageTypeId == 3 && s.Workshop.WorkshopTypeId == 2)
                 .ToList();
             DGProductStages.ItemsSource = productStages;
         }
 
         private void Btn_AcceptStage_Click(object sender, RoutedEventArgs e)
         {
-            if(DGProductStages.SelectedItem is ProductStage selectedProductStage)
+            if (DGProductStages.SelectedItem is ProductStage selectedProductStage)
             {
                 var productStage = _dbContext.ProductStages.FirstOrDefault(p => p.ProductStageId == selectedProductStage.ProductStageId);
-                if(productStage != null)
+                if (productStage != null)
                 {
                     productStage.ProductStageTypeId = 1;
                     productStage.WorkshopId = _WorkshopId;
