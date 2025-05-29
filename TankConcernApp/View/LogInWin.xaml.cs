@@ -106,6 +106,10 @@ namespace TankConcernApp
                         this.Close();
                         break;
                     case 4:
+                        MessageBox.Show($"Добро пожаловать в складской цех! Начальник цеха: {employee.LastName}");
+                        StorageShopWin storageShopWin = new StorageShopWin(workshopId);
+                        storageShopWin.Show();
+                        this.Close();
                         break;
                     default:
                         MessageBox.Show("Такой роли не существует!");
