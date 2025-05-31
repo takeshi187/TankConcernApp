@@ -10,4 +10,6 @@ public partial class ProductStageType
     public string ProductStageTypeName { get; set; } = null!;
 
     public virtual ICollection<ProductStage> ProductStages { get; set; } = new List<ProductStage>();
+
+    public virtual ICollection<ProductionLog> ProductionLogs { get; set; } = new List<ProductionLog>();
 }

@@ -62,7 +62,7 @@ public partial class TankConcernDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-2D1FGK3;Database=TankConcernDB;Trusted_Connection=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-2D1FGK3;Database=TankConcernDB;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -243,10 +243,16 @@ public partial class TankConcernDbContext : DbContext
             entity.HasOne(d => d.ProductStage).WithMany(p => p.ProductionLogs)
                 .HasForeignKey(d => d.ProductStageId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ProductionLogs_ProductStages");
+                .HasConstraintName("FK_ProductionLogs_ProductStages1");
+
+            entity.HasOne(d => d.ProductStageType).WithMany(p => p.ProductionLogs)
+                .HasForeignKey(d => d.ProductStageTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProductionLogs_ProductStageTypes");
 
             entity.HasOne(d => d.BrigadeWorkshopAssignment).WithMany(p => p.ProductionLogs)
                 .HasForeignKey(d => new { d.WorkshopId, d.BrigadeId })
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ProductionLogs_BrigadeWorkshopAssignments1");
         });
 
