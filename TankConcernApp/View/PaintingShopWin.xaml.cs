@@ -26,17 +26,24 @@ namespace TankConcernApp.View
             InitializeComponent();
             _WorkshopId = workshopId;
             TxtBox_WorkshoId.Text = workshopId.ToString();
-            LoadStages();
+            LoadProductStages();
         }
 
-        private void LoadStages()
+        private void LoadProductStages()
         {
-            var productStages = _dbContext.ProductStages
-                .Include(s => s.ProductStageType)
-                .Include(s => s.Workshop)
-                .Where(s => s.ProductStageTypeId == 3 && s.Workshop.WorkshopTypeId == 1)
-                .ToList();
-            DGProductStages.ItemsSource = productStages;
+            try
+            {
+                var productStages = _dbContext.ProductStages
+                    .Include(s => s.ProductStageType)
+                    .Include(s => s.Workshop)
+                    .Where(s => s.ProductStageTypeId == 3 && s.Workshop.WorkshopTypeId == 1)
+                    .ToList();
+                DGProductStages.ItemsSource = productStages;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке стадий: {ex.Message}");
+            }           
         }
 
         private void Btn_AcceptStage_Click(object sender, RoutedEventArgs e)
@@ -50,7 +57,7 @@ namespace TankConcernApp.View
                     productStage.WorkshopId = _WorkshopId;
                     _dbContext.SaveChanges();
                     MessageBox.Show("Стадия продукта успешно принята!");
-                    LoadStages();
+                    LoadProductStages();
                 }
             }
             else

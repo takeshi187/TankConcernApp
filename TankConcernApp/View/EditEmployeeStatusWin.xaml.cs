@@ -15,46 +15,67 @@ namespace TankConcernApp.View
 
         private void LoadEmployees()
         {
-            var employees = _dbContext.Employees
-                .Select(e => new
-                {
-                    e.EmployeeId,
-                    FullName = $"Id: {e.EmployeeId} - {e.FirstName} {e.LastName}"
-                }).ToList();
-            ComboBox_Employees.ItemsSource = employees;
-            ComboBox_Employees.DisplayMemberPath = "FullName";
-            ComboBox_Employees.SelectedValuePath = "EmployeeId";
+            try
+            {
+                var employees = _dbContext.Employees
+                    .Select(e => new
+                    {
+                        e.EmployeeId,
+                        FullName = $"Id: {e.EmployeeId} - {e.FirstName} {e.LastName}"
+                    }).ToList();
+                ComboBox_Employees.ItemsSource = employees;
+                ComboBox_Employees.DisplayMemberPath = "FullName";
+                ComboBox_Employees.SelectedValuePath = "EmployeeId";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке пользователей: {ex.Message}");
+            }
         }
 
         private void LoadStatuses()
         {
-            var statuses = _dbContext.EmployeeStatuses
-                .Select(s => new
-                {
-                    StatusId = s.EmployeeStatusId,
-                    StatusName = s.EmployeeStatusName
-                }).ToList();
-            ComboBox_Statuses.ItemsSource = statuses;
-            ComboBox_Statuses.DisplayMemberPath = "StatusName";
-            ComboBox_Statuses.SelectedValuePath = "StatusId";
+            try
+            {
+                var statuses = _dbContext.EmployeeStatuses
+                    .Select(s => new
+                    {
+                        StatusId = s.EmployeeStatusId,
+                        StatusName = s.EmployeeStatusName
+                    }).ToList();
+                ComboBox_Statuses.ItemsSource = statuses;
+                ComboBox_Statuses.DisplayMemberPath = "StatusName";
+                ComboBox_Statuses.SelectedValuePath = "StatusId";
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке статусов: {ex.Message}");
+            }            
         }
 
         private void Btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            if (ComboBox_Employees.SelectedValue is long employeeId &&
-            ComboBox_Statuses.SelectedValue is long statusId)
+            try
             {
-                var employee = _dbContext.Employees.FirstOrDefault(e => e.EmployeeId == employeeId);
-                if (employee != null)
+                if (ComboBox_Employees.SelectedValue is long employeeId &&
+                    ComboBox_Statuses.SelectedValue is long statusId)
                 {
-                    employee.EmployeeStatusId = statusId;
-                    _dbContext.SaveChanges();
-                    MessageBox.Show("Статус успешно изменён.");
+                    var employee = _dbContext.Employees.FirstOrDefault(e => e.EmployeeId == employeeId);
+                    if (employee != null)
+                    {
+                        employee.EmployeeStatusId = statusId;
+                        _dbContext.SaveChanges();
+                        MessageBox.Show("Статус успешно изменён.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Пожалуйста, выберите сотрудника и статус.");
                 }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Пожалуйста, выберите сотрудника и статус.");
+                MessageBox.Show($"ошибка при изменении статуса пользователя: {ex.Message}");
             }
         }
 

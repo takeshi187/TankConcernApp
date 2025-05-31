@@ -31,52 +31,66 @@ namespace TankConcernApp.View
 
         private void LoadOrders()
         {
-            var orders = _dbContext.Orders
-                .Where(o => o.OrderStatusId == 1)
-                .Include(o => o.OrderStatus)
-                .Include(o => o.Customer)
-                .Include (o => o.Product)
-                .Select(o => new OrderDisplay
-                {
-                    OrderId = o.OrderId,
-                    CustomerName = o.Customer.CustomerName,
-                    ProductName = o.Product.ProductName,
-                    OrderDate = o.OrderDate,
-                    Count = o.Count,
-                    TotalPrice = o.TotalPrice,
-                    OrderStatusName = o.OrderStatus.OrderStatusName
-                }).ToList();
+            try
+            {
+                var orders = _dbContext.Orders
+                    .Where(o => o.OrderStatusId == 1)
+                    .Include(o => o.OrderStatus)
+                    .Include(o => o.Customer)
+                    .Include(o => o.Product)
+                    .Select(o => new OrderDisplay
+                    {
+                        OrderId = o.OrderId,
+                        CustomerName = o.Customer.CustomerName,
+                        ProductName = o.Product.ProductName,
+                        OrderDate = o.OrderDate,
+                        Count = o.Count,
+                        TotalPrice = o.TotalPrice,
+                        OrderStatusName = o.OrderStatus.OrderStatusName
+                    }).ToList();
 
-            DGOrders.ItemsSource = orders;
+                DGOrders.ItemsSource = orders;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке заказов: {ex.Message}");
+            }
         }
 
         private void Btn_AcceptOrder_Click(object sender, RoutedEventArgs e)
         {
-            if(DGOrders.SelectedItem is OrderDisplay selectedOrder)
+            try
             {
-                var order = _dbContext.Orders.FirstOrDefault(o => o.OrderId == selectedOrder.OrderId);
-                if(order != null)
+                if (DGOrders.SelectedItem is OrderDisplay selectedOrder)
                 {
-                    order.OrderStatusId = 2;
-
-                    var productStage = new ProductStage
+                    var order = _dbContext.Orders.FirstOrDefault(o => o.OrderId == selectedOrder.OrderId);
+                    if (order != null)
                     {
-                        OrderId = order.OrderId,
-                        WorkshopId = _WorkshopId,
-                        ProductStageTypeId = 1,
-                    };
+                        order.OrderStatusId = 2;
 
-                    _dbContext.ProductStages.Add(productStage);
-                    _dbContext.SaveChanges();
+                        var productStage = new ProductStage
+                        {
+                            OrderId = order.OrderId,
+                            WorkshopId = _WorkshopId,
+                            ProductStageTypeId = 1,
+                        };
 
-                    MessageBox.Show("Заказа принят и стадия продукта создана!");
-                    LoadOrders();
+                        _dbContext.ProductStages.Add(productStage);
+                        _dbContext.SaveChanges();
+
+                        MessageBox.Show("Заказ принят и стадия продукта создана!");
+                        LoadOrders();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Пожалуйста, выберите заказ!");
                 }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Пожалуйста, выберите заказ!");
-            }
+                MessageBox.Show($"Ошибка при принятии заказа: {ex.Message}");
+            }            
         }
 
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)

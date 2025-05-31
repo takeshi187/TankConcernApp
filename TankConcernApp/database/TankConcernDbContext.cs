@@ -271,6 +271,8 @@ public partial class TankConcernDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
+            entity.HasIndex(e => e.Email, "IX_Users").IsUnique();
+
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.Login).HasMaxLength(100);
             entity.Property(e => e.Password).HasMaxLength(255);

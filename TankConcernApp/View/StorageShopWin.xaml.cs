@@ -30,18 +30,25 @@ namespace TankConcernApp.View
 
         private void LoadInventory()
         {
-            var inventory = _dbContext.PartsInventories
-                .Include(p => p.PartType)
-                .Include(p => p.TankPart)
-                .Select(i => new
-                {
-                    i.InventoryId,
-                    TankPartName = i.TankPart.TankPartName,
-                    i.Count,
-                    i.LastUpdate,
-                    PartTypeName = i.PartType.PartTypeName
-                }).ToList();
-            DGPartsInventory.ItemsSource = inventory;
+            try
+            {
+                var inventory = _dbContext.PartsInventories
+                    .Include(p => p.PartType)
+                    .Include(p => p.TankPart)
+                    .Select(i => new
+                    {
+                        i.InventoryId,
+                        i.TankPart.TankPartName,
+                        i.Count,
+                        i.LastUpdate,
+                        i.PartType.PartTypeName
+                    }).ToList();
+                DGPartsInventory.ItemsSource = inventory;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке инвентаря: {ex.Message}");
+            }
         }
 
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)

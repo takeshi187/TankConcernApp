@@ -15,11 +15,16 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="5">
+            <Label Content="Выберите сотрудника:" Margin="5" Grid.Row="0"/>
+        </StackPanel>
         
-        <Label Content="Выберите сотрудника:" Margin="5" Grid.Row="0"/>
         <ComboBox x:Name="ComboBox_Employees" Margin="10" Grid.Row="1"/>
 
-        <Label Content="Выберите статус:" Margin="5" Grid.Row="2"/>
+        <StackPanel Grid.Row="2" Margin="5">
+            <Label Content="Выберите статус:" Margin="5" Grid.Row="2"/>
+        </StackPanel>
+
         <ComboBox x:Name="ComboBox_Statuses" Margin="10" Grid.Row="3"/>
 
         <Button x:Name="Btn_Save" Content="Сохранить" Width="100" Click="Btn_Save_Click" Margin="5" Grid.Row="4" HorizontalAlignment="Left"/>

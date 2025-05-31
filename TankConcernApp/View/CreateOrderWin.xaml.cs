@@ -28,51 +28,72 @@ namespace TankConcernApp.View
 
         private void LoadCustomers()
         {
-            var customers = _dbContext.Customers
-                .Select(c => new
-                {
-                    c.CustomerId,
-                    DisplayName = $"Id: {c.CustomerId} - {c.CustomerName}"
-                }).ToList();
-            ComboBox_Customers.ItemsSource = customers;
-            ComboBox_Customers.DisplayMemberPath = "DisplayName";
-            ComboBox_Customers.SelectedValuePath = "CustomerId";
+            try
+            {
+                var customers = _dbContext.Customers
+                    .Select(c => new
+                    {
+                        c.CustomerId,
+                        DisplayName = $"Id: {c.CustomerId} - {c.CustomerName}"
+                    }).ToList();
+                ComboBox_Customers.ItemsSource = customers;
+                ComboBox_Customers.DisplayMemberPath = "DisplayName";
+                ComboBox_Customers.SelectedValuePath = "CustomerId";
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке заказчиков: {ex.Message}");
+            }
         }
 
         private void LoadProducts()
         {
-            var products = _dbContext.Products
-                .Select(p => new
-                {
-                    p.ProductId,
-                    DisplayName = $"Id: {p.ProductId} - {p.ProductName}"
-                }).ToList();
-            ComboBox_Products.ItemsSource = products;
-            ComboBox_Products.DisplayMemberPath = "DisplayName";
-            ComboBox_Products.SelectedValuePath = "ProductId";
+            try
+            {
+                var products = _dbContext.Products
+                    .Select(p => new
+                    {
+                        p.ProductId,
+                        DisplayName = $"Id: {p.ProductId} - {p.ProductName}"
+                    }).ToList();
+                ComboBox_Products.ItemsSource = products;
+                ComboBox_Products.DisplayMemberPath = "DisplayName";
+                ComboBox_Products.SelectedValuePath = "ProductId";
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке продукции: {ex.Message}");
+            }
         }
 
         private void Btn_CreateOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (ComboBox_Customers.SelectedValue is long customerId &&
-                ComboBox_Products.SelectedValue is long productId &&
-                int.TryParse(TextBox_Count.Text, out int count) &&
-                decimal.TryParse(TextBox_Price.Text, out decimal price))
+            try
             {
-                var order = new Order
+                if (ComboBox_Customers.SelectedValue is long customerId &&
+                    ComboBox_Products.SelectedValue is long productId &&
+                    int.TryParse(TextBox_Count.Text, out int count) &&
+                    decimal.TryParse(TextBox_Price.Text, out decimal price))
                 {
-                    CustomerId = customerId,
-                    ProductId = productId,
-                    Count = count,
-                    TotalPrice = price,
-                    OrderDate = DateOnly.FromDateTime(DateTime.Now),
-                    OrderStatusId = 1
-                };
+                    var order = new Order
+                    {
+                        CustomerId = customerId,
+                        ProductId = productId,
+                        Count = count,
+                        TotalPrice = price,
+                        OrderDate = DateOnly.FromDateTime(DateTime.Now),
+                        OrderStatusId = 1
+                    };
 
-                _dbContext.Orders.Add(order);
-                _dbContext.SaveChanges();
+                    _dbContext.Orders.Add(order);
+                    _dbContext.SaveChanges();
 
-                MessageBox.Show("Заказ успешно создан!");
+                    MessageBox.Show("Заказ успешно создан!");
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при создании заказа: {ex.Message}");
             }
         }
 

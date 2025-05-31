@@ -16,29 +16,43 @@ namespace TankConcernApp.View
 
         private void LoadEmployees()
         {
-            var employees = dbContext.Employees.Join(dbContext.EmployeePosts,
-                e => e.EmployeePostId,
-                p => p.EmployeePostId,
-                (e, p) => new
-                {
-                    e.EmployeeId,
-                    FullName = "id " + e.EmployeeId.ToString() + " " + e.FirstName + " " + e.LastName + " - " + p.EmployeePostName
-                }).ToList();
-            ComboBox_EmployeeId.ItemsSource = employees;
-            ComboBox_EmployeeId.DisplayMemberPath = "FullName";
-            ComboBox_EmployeeId.SelectedValuePath = "EmployeeId";
+            try
+            {
+                var employees = dbContext.Employees.Join(dbContext.EmployeePosts,
+                    e => e.EmployeePostId,
+                    p => p.EmployeePostId,
+                    (e, p) => new
+                    {
+                        e.EmployeeId,
+                        FullName = "id " + e.EmployeeId.ToString() + " " + e.FirstName + " " + e.LastName + " - " + p.EmployeePostName
+                    }).ToList();
+                ComboBox_EmployeeId.ItemsSource = employees;
+                ComboBox_EmployeeId.DisplayMemberPath = "FullName";
+                ComboBox_EmployeeId.SelectedValuePath = "EmployeeId";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке пользователей: {ex.Message}");
+            }
         }
 
         private void LoadRoles()
         {
-            var roles = dbContext.UserRoles.Select(r => new
+            try
             {
-                r.RoleId,
-                r.RoleName
-            }).ToList();
-            ComboBox_RoleId.ItemsSource = roles;
-            ComboBox_RoleId.DisplayMemberPath = "RoleName";
-            ComboBox_RoleId.SelectedValuePath = "RoleId";
+                var roles = dbContext.UserRoles.Select(r => new
+                {
+                    r.RoleId,
+                    r.RoleName
+                }).ToList();
+                ComboBox_RoleId.ItemsSource = roles;
+                ComboBox_RoleId.DisplayMemberPath = "RoleName";
+                ComboBox_RoleId.SelectedValuePath = "RoleId";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке ролей: {ex.Message}");
+            }
         }
 
         private void Btn_AddUser_Click(object sender, RoutedEventArgs e)
@@ -88,7 +102,7 @@ namespace TankConcernApp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при добавлении пользователей: {ex.Message}");
+                MessageBox.Show($"Ошибка при добавлении пользователя: {ex.Message}");
             }
         }
 

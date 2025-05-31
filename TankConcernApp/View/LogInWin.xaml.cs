@@ -50,9 +50,7 @@ namespace TankConcernApp
                                 CheckHeadOfWorkshop(user);
                                 break;
                             case 4:
-                                MessageBox.Show($"Добро пожаловать! Менеджер по производству: {employee.LastName}");
-                                ProdManagerWin prodManagerWin = new ProdManagerWin();
-                                prodManagerWin.Show();
+                                CheckProdManager(user);
                                 break;
                             case 5:
                                 break;
@@ -72,53 +70,84 @@ namespace TankConcernApp
 
         private void CheckHeadOfWorkshop(User user)
         {
-            var roleId = user.RoleId;
-            var employee = _dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
-            var brigadeId = _dbContext.EmployeeBrigades
-                .Where(b => b.EmployeeId == employee.EmployeeId)
-                .Select(b => b.BrigadeId)
-                .FirstOrDefault();
-            var workshopId = _dbContext.BrigadeWorkshopAssignments
-                .Where(w => w.BrigadeId == brigadeId)
-                .Select (w => w.WorkshopId)
-                .FirstOrDefault();
-            var workshopType = _dbContext.WorkshopTypes.FirstOrDefault(w => w.WorkshopTypeId == workshopId);
-            if (workshopType != null)
+            try
             {
-                switch(workshopType.WorkshopTypeId)
+                var employee = _dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
+                var brigadeId = _dbContext.EmployeeBrigades
+                    .Where(b => b.EmployeeId == employee.EmployeeId)
+                    .Select(b => b.BrigadeId)
+                    .FirstOrDefault();
+                var workshopId = _dbContext.BrigadeWorkshopAssignments
+                    .Where(w => w.BrigadeId == brigadeId)
+                    .Select(w => w.WorkshopId)
+                    .FirstOrDefault();
+                var workshopType = _dbContext.WorkshopTypes.FirstOrDefault(w => w.WorkshopTypeId == workshopId);
+                if (workshopType != null)
                 {
-                    case 1:
-                        MessageBox.Show($"Добро пожаловать в сборочный цех! Начальник цеха: {employee.LastName}");
-                        AssemblyShopWin assemblyShopWin = new AssemblyShopWin(workshopId);
-                        assemblyShopWin.Show();
-                        this.Close();
-                        break;
-                    case 2:
-                        MessageBox.Show($"Добро пожаловать в покрасочный цех! Начальник цеха: {employee.LastName}");
-                        PaintingShopWin paintingShopWin = new PaintingShopWin(workshopId);
-                        paintingShopWin.Show();
-                        this.Close();
-                        break;
-                    case 3:
-                        MessageBox.Show($"Добро пожаловать в цех тестирования! Начальник цеха: {employee.LastName}");
-                        TestingShopWin testingShopWin = new TestingShopWin(workshopId);
-                        testingShopWin.Show();
-                        this.Close();
-                        break;
-                    case 4:
-                        MessageBox.Show($"Добро пожаловать в складской цех! Начальник цеха: {employee.LastName}");
-                        StorageShopWin storageShopWin = new StorageShopWin(workshopId);
-                        storageShopWin.Show();
-                        this.Close();
-                        break;
-                    default:
-                        MessageBox.Show("Такой роли не существует!");
-                        break;
+                    switch (workshopType.WorkshopTypeId)
+                    {
+                        case 1:
+                            MessageBox.Show($"Добро пожаловать в сборочный цех! Начальник цеха: {employee.LastName}");
+                            AssemblyShopWin assemblyShopWin = new AssemblyShopWin(workshopId);
+                            assemblyShopWin.Show();
+                            this.Close();
+                            break;
+                        case 2:
+                            MessageBox.Show($"Добро пожаловать в покрасочный цех! Начальник цеха: {employee.LastName}");
+                            PaintingShopWin paintingShopWin = new PaintingShopWin(workshopId);
+                            paintingShopWin.Show();
+                            this.Close();
+                            break;
+                        case 3:
+                            MessageBox.Show($"Добро пожаловать в цех тестирования! Начальник цеха: {employee.LastName}");
+                            TestingShopWin testingShopWin = new TestingShopWin(workshopId);
+                            testingShopWin.Show();
+                            this.Close();
+                            break;
+                        case 4:
+                            MessageBox.Show($"Добро пожаловать в складской цех! Начальник цеха: {employee.LastName}");
+                            StorageShopWin storageShopWin = new StorageShopWin(workshopId);
+                            storageShopWin.Show();
+                            this.Close();
+                            break;
+                        default:
+                            MessageBox.Show("Такой роли не существует!");
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка при авторизации workshop");
                 }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Ошибка при авторизации workshop");
+                MessageBox.Show($"Ошибка при авторизации начальника цеха: {ex.Message}");
+            }
+        }
+
+        private void CheckProdManager(User user)
+        {
+            try
+            {
+                var employee = _dbContext.Employees.FirstOrDefault(e => e.EmployeeId == user.EmployeeId);
+                var brigadeId = _dbContext.EmployeeBrigades
+                    .Where(b => b.EmployeeId == employee.EmployeeId)
+                    .Select(b => b.BrigadeId)
+                    .FirstOrDefault();
+                var workshopId = _dbContext.BrigadeWorkshopAssignments
+                   .Where(w => w.BrigadeId == brigadeId)
+                   .Select(w => w.WorkshopId)
+                   .FirstOrDefault();
+
+                ProdManagerWin prodManagerWin = new ProdManagerWin(employee.EmployeeId, brigadeId, workshopId);
+                MessageBox.Show($"Добро пожаловать! Менеджер по производству: {employee.LastName}");
+                prodManagerWin.Show();
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при авторизации менеджера по производству: {ex.Message}");
             }
         }
 

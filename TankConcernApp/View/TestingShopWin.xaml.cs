@@ -26,36 +26,50 @@ namespace TankConcernApp.View
             InitializeComponent();
             _WorkshopId = workshopId;
             TxtBox_WorkshoId.Text = workshopId.ToString();
-            LoadStages();
+            LoadProductStages();
         }
 
-        private void LoadStages()
+        private void LoadProductStages()
         {
-            var productStages = _dbContext.ProductStages
-                .Include(s => s.ProductStageType)
-                .Include(s => s.Workshop)
-                .Where(s => s.ProductStageTypeId == 3 && s.Workshop.WorkshopTypeId == 2)
-                .ToList();
-            DGProductStages.ItemsSource = productStages;
+            try
+            {
+                var productStages = _dbContext.ProductStages
+                    .Include(s => s.ProductStageType)
+                    .Include(s => s.Workshop)
+                    .Where(s => s.ProductStageTypeId == 3 && s.Workshop.WorkshopTypeId == 2)
+                    .ToList();
+                DGProductStages.ItemsSource = productStages;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке стадий: {ex.Message}");
+            }
         }
 
         private void Btn_AcceptStage_Click(object sender, RoutedEventArgs e)
         {
-            if (DGProductStages.SelectedItem is ProductStage selectedProductStage)
+            try
             {
-                var productStage = _dbContext.ProductStages.FirstOrDefault(p => p.ProductStageId == selectedProductStage.ProductStageId);
-                if (productStage != null)
+                if (DGProductStages.SelectedItem is ProductStage selectedProductStage)
                 {
-                    productStage.ProductStageTypeId = 1;
-                    productStage.WorkshopId = _WorkshopId;
-                    _dbContext.SaveChanges();
-                    MessageBox.Show("Стадия продукта успешно принята!");
-                    LoadStages();
+                    var productStage = _dbContext.ProductStages.FirstOrDefault(p => p.ProductStageId == selectedProductStage.ProductStageId);
+                    if (productStage != null)
+                    {
+                        productStage.ProductStageTypeId = 1;
+                        productStage.WorkshopId = _WorkshopId;
+                        _dbContext.SaveChanges();
+                        MessageBox.Show("Стадия продукта успешно принята!");
+                        LoadProductStages();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Пожалуйста, выберите стадию продукта!");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Пожалуйста, выберите стадию продукта!");
+                MessageBox.Show($"Ошибка при принятии стадии: {ex.Message}");
             }
         }
 

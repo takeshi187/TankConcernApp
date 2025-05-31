@@ -21,18 +21,30 @@
         
 
         <StackPanel Grid.Row="2" Margin="5" Orientation="Horizontal">
-            <Label Grid.Row="2">id</Label>
-            <TextBox Width="200"/>
-            <ComboBox Width="200" Margin="350,15,15,15">
-                <ComboBoxItem Content="Test"/>
-                <ComboBoxItem Content="Test"/>
-                <ComboBoxItem Content="Test"/>
-            </ComboBox>
+            <Label Width="auto" Height="30" FontSize="14">id менеджера:</Label>
+            <TextBox x:Name="TxtBox_ManagerId" IsReadOnly="True" Width="100" Height="30" FontSize="14"/>
+
+            <Label Width="auto" Height="30" Margin="10,0,0,0" FontSize="14">id бригады:</Label>
+            <TextBox x:Name="TxtBox_BrigadeId" IsReadOnly="True" Width="100" Height="30" FontSize="14"/>
+
+            <Label Width="auto" Height="30" Margin="10,0,0,0" FontSize="14">id цеха:</Label>
+            <TextBox x:Name="TxtBox_WorkshopId" IsReadOnly="True" Width="100" Height="30" FontSize="14"/>
+
+            <ComboBox x:Name="ComboBox_ProductStageTypes" Width="200" Margin="10" DisplayMemberPath="ProductStageTypeName" SelectedValuePath="ProductStageTypeId"/>
         </StackPanel>
+
+        <DataGrid x:Name="DGProductStages" AutoGenerateColumns="False" Grid.Row="1" Margin="5" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding ProductStageId}" Width="auto"/>
+                <DataGridTextColumn Header="Статус стадии" Binding="{Binding ProductStageType.ProductStageTypeName}" Width="*"/>
+                <DataGridTextColumn Header="Id цеха" Binding="{Binding WorkshopId}" Width="*"/>
+                <DataGridTextColumn Header="Id заказа" Binding="{Binding OrderId}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <StackPanel Grid.Row="3" Margin="5" Orientation="Horizontal">
             <Button x:Name="Btn_EditStatus" Margin="5" Width="184" Content="Изменить статус" Click="Btn_EditStatus_Click"/>
-            <Button x:Name="Btn_Exit" Margin="5" Width="184" Content="Выйти" Click="Btn_Exit_Click"/>
+            <Button x:Name="Btn_Exit" Margin="5" Width="184" Content="Выход" Click="Btn_Exit_Click"/>
         </StackPanel>
     </Grid>
 </Window>

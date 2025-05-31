@@ -15,18 +15,18 @@ namespace TankConcernApp.View
 
         private void LoadEmployees()
         {
-            var employees = _dbContext.Employees
-                .Include(e => e.EmployeePost)
-                .Include(e => e.EmployeeStatus)
-                .Select(e => new
-                {
-                    e.EmployeeId,
-                    e.FirstName,
-                    e.LastName,
-                    EmployeePostName = e.EmployeePost.EmployeePostName,
-                    EmployeeStatusName = e.EmployeeStatus.EmployeeStatusName
-                }).ToList();
-            DGEmployees.ItemsSource = employees;
+            try
+            {
+                var employees = _dbContext.Employees
+                    .Include(e => e.EmployeePost)
+                    .Include(e => e.EmployeeStatus)
+                    .ToList();
+                DGEmployees.ItemsSource = employees;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке пользователей: {ex.Message}");
+            }
         }
 
         private void Btn_AddUser_Click(object sender, RoutedEventArgs e)
