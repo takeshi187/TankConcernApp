@@ -30,7 +30,7 @@
             <Label Width="auto" Height="30" Margin="10,0,0,0" FontSize="14">id цеха:</Label>
             <TextBox x:Name="TxtBox_WorkshopId" IsReadOnly="True" Width="100" Height="30" FontSize="14"/>
 
-            <ComboBox x:Name="ComboBox_ProductStageTypes" Width="200" Margin="10" DisplayMemberPath="ProductStageTypeName" SelectedValuePath="ProductStageTypeId"/>
+            <ComboBox x:Name="ComboBox_ProductStageTypes" Width="200" Margin="10"/>
         </StackPanel>
 
         <DataGrid x:Name="DGProductStages" AutoGenerateColumns="False" Grid.Row="1" Margin="5" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">

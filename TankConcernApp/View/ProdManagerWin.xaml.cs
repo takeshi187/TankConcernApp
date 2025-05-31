@@ -47,13 +47,10 @@ namespace TankConcernApp.View
         {
             try
             {
-                var statuses = _dbContext.ProductStageTypes
-                    .Select(s => new
-                    {
-                        s.ProductStageTypeId,
-                        s.ProductStageTypeName,
-                    }).ToList();
+                var statuses = _dbContext.ProductStageTypes.ToList();
                 ComboBox_ProductStageTypes.ItemsSource = statuses;
+                ComboBox_ProductStageTypes.DisplayMemberPath = "ProductStageTypeName";
+                ComboBox_ProductStageTypes.SelectedValuePath = "ProductStageTypeId";
             }
             catch (Exception ex)
             {
