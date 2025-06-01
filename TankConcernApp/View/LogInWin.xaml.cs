@@ -53,6 +53,9 @@ namespace TankConcernApp
                                 CheckProdManager(user);
                                 break;
                             case 5:
+                                MessageBox.Show($"Добро пожаловать! Менеджер по поставкам: {employee.LastName}");
+                                InventoryManagerWin inventoryManagerWin = new InventoryManagerWin();
+                                inventoryManagerWin.Show();
                                 break;
                             default:
                                 MessageBox.Show("Такой роли не существует!");
@@ -120,7 +123,7 @@ namespace TankConcernApp
                     MessageBox.Show("Ошибка при авторизации workshop");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при авторизации начальника цеха: {ex.Message}");
             }
@@ -145,7 +148,7 @@ namespace TankConcernApp
                 prodManagerWin.Show();
                 this.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при авторизации менеджера по производству: {ex.Message}");
             }

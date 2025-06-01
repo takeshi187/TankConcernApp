@@ -47,10 +47,10 @@ namespace TankConcernApp.View
                 ComboBox_Statuses.DisplayMemberPath = "StatusName";
                 ComboBox_Statuses.SelectedValuePath = "StatusId";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке статусов: {ex.Message}");
-            }            
+            }
         }
 
         private void Btn_Save_Click(object sender, RoutedEventArgs e)
@@ -73,7 +73,7 @@ namespace TankConcernApp.View
                     MessageBox.Show("Пожалуйста, выберите сотрудника и статус.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"ошибка при изменении статуса пользователя: {ex.Message}");
             }

@@ -1,17 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TankConcernApp.database;
 using TankConcernApp.Model;
 
@@ -51,7 +39,7 @@ namespace TankConcernApp.View
 
                 DGOrders.ItemsSource = orders;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке заказов: {ex.Message}");
             }
@@ -59,40 +47,50 @@ namespace TankConcernApp.View
 
         private bool EnoughInStorage(long productId, long count)
         {
-            var requiredParts = _dbContext.TankParts
-                .Where(p => p.ProductId == productId)
-                .ToList();
-
-            if (!requiredParts.Any())
+            try
             {
-                MessageBox.Show("Для выбранного продукта не указаны необходимые запчасти. Невозможно принять заказ.");
-                return false;
-            }
+                var requiredParts = _dbContext.TankParts
+                    .Where(p => p.ProductId == productId)
+                    .ToList();
 
-            var inventory = _dbContext.PartsInventories
-                .Include(p => p.TankPart)
-                .ToList();
-
-            foreach (var part in requiredParts)
-            {
-                var inventoryItem = inventory.FirstOrDefault(i => i.TankPartId == part.TankPartId);
-                if (inventoryItem == null || inventoryItem.Count < count)
+                if (!requiredParts.Any())
                 {
-                    MessageBox.Show("Недостаточно запчастей на складе!");
+                    MessageBox.Show("Для выбранного продукта не указаны необходимые запчасти. Невозможно принять заказ.");
                     return false;
                 }
-            }
+                else
+                {
+                    var inventory = _dbContext.PartsInventories
+                        .Include(p => p.TankPart)
+                        .ToList();
 
-            foreach(var part in requiredParts)
+                    foreach (var part in requiredParts)
+                    {
+                        var inventoryItem = inventory.FirstOrDefault(i => i.TankPartId == part.TankPartId);
+                        if (inventoryItem == null || inventoryItem.Count < count)
+                        {
+                            MessageBox.Show("Недостаточно запчастей на складе!");
+                            return false;
+                        }
+                    }
+
+                    foreach (var part in requiredParts)
+                    {
+                        var inventoryItem = inventory.First(i => i.TankPartId == part.TankPartId);
+                        inventoryItem.Count -= count;
+                        inventoryItem.LastUpdate = DateOnly.FromDateTime(DateTime.Now);
+                    }
+
+                    _dbContext.SaveChanges();
+                    MessageBox.Show("Запчасти успешно списаны!");
+                    return true;
+                }                
+            }
+            catch(Exception ex)
             {
-                var inventoryItem = inventory.First(i => i.TankPartId == part.TankPartId);
-                inventoryItem.Count -= count;
-                inventoryItem.LastUpdate = DateOnly.FromDateTime(DateTime.Now);
-            }
-
-            _dbContext.SaveChanges();
-            MessageBox.Show("Запчасти успешно списаны!");
-            return true;
+                MessageBox.Show($"Ошибка при списании деталей: {ex.Message}");
+                return false;
+            }           
         }
 
         private void Btn_AcceptOrder_Click(object sender, RoutedEventArgs e)
@@ -104,7 +102,7 @@ namespace TankConcernApp.View
                     var order = _dbContext.Orders.FirstOrDefault(o => o.OrderId == selectedOrder.OrderId);
                     if (order != null)
                     {
-                        if(EnoughInStorage(order.ProductId, order.Count))
+                        if (EnoughInStorage(order.ProductId, order.Count))
                         {
                             order.OrderStatusId = 2;
 
@@ -132,10 +130,10 @@ namespace TankConcernApp.View
                     MessageBox.Show("Пожалуйста, выберите заказ!");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при принятии заказа: {ex.Message}");
-            }            
+            }
         }
 
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)

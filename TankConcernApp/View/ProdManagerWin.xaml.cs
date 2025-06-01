@@ -37,7 +37,7 @@ namespace TankConcernApp.View
                     .ToList();
                 DGProductStages.ItemsSource = productStages;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке стадий: {ex.Message}");
             }
@@ -81,7 +81,7 @@ namespace TankConcernApp.View
                         return;
                     }
 
-                    if(selectedType.ProductStageTypeId == 4 && stage.Workshop.WorkshopTypeId != 3)
+                    if (selectedType.ProductStageTypeId == 4 && stage.Workshop.WorkshopTypeId != 3)
                     {
                         MessageBox.Show("Статус 'Завершен' можно применить только в цеху тестирования!");
                         return;
@@ -90,10 +90,10 @@ namespace TankConcernApp.View
                     stage.ProductStageTypeId = selectedType.ProductStageTypeId;
                     _dbContext.SaveChanges();
 
-                    if(selectedType.ProductStageTypeId == 4)
+                    if (selectedType.ProductStageTypeId == 4)
                     {
                         var order = _dbContext.Orders.FirstOrDefault(o => o.OrderId == stage.OrderId);
-                        if(order == null)
+                        if (order == null)
                         {
                             MessageBox.Show($"Заказ не найден!");
                             return;
@@ -127,7 +127,7 @@ namespace TankConcernApp.View
             {
                 MessageBox.Show($"Ошибка при изменении статуса стадии: {ex.Message}");
             }
-            
+
         }
 
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)

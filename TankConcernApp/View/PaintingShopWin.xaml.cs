@@ -1,17 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TankConcernApp.database;
 using TankConcernApp.Model;
 
@@ -40,18 +28,18 @@ namespace TankConcernApp.View
                     .ToList();
                 DGProductStages.ItemsSource = productStages;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке стадий: {ex.Message}");
-            }           
+            }
         }
 
         private void Btn_AcceptStage_Click(object sender, RoutedEventArgs e)
         {
-            if(DGProductStages.SelectedItem is ProductStage selectedProductStage)
+            if (DGProductStages.SelectedItem is ProductStage selectedProductStage)
             {
                 var productStage = _dbContext.ProductStages.FirstOrDefault(p => p.ProductStageId == selectedProductStage.ProductStageId);
-                if(productStage != null)
+                if (productStage != null)
                 {
                     productStage.ProductStageTypeId = 1;
                     productStage.WorkshopId = _WorkshopId;

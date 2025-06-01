@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using TankConcernApp.database;
 using TankConcernApp.Model;
 
@@ -40,7 +28,7 @@ namespace TankConcernApp.View
                 ComboBox_Customers.DisplayMemberPath = "DisplayName";
                 ComboBox_Customers.SelectedValuePath = "CustomerId";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке заказчиков: {ex.Message}");
             }
@@ -60,7 +48,7 @@ namespace TankConcernApp.View
                 ComboBox_Products.DisplayMemberPath = "DisplayName";
                 ComboBox_Products.SelectedValuePath = "ProductId";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке продукции: {ex.Message}");
             }
@@ -91,7 +79,7 @@ namespace TankConcernApp.View
                     MessageBox.Show("Заказ успешно создан!");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при создании заказа: {ex.Message}");
             }
