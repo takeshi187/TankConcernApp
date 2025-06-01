@@ -1,0 +1,36 @@
+﻿<Window x:Class="TankConcernApp.View.BrigadierMainWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TankConcernApp.View"
+        mc:Ignorable="d"
+        Title="Главный бригадир" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="5">
+            <Label HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20">Главный бригадир</Label>
+        </StackPanel>
+
+        <DataGrid x:Name="DGEmployeeBrigades" AutoGenerateColumns="False" Grid.Row="1" Margin="5" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Ebid}" Width="auto"/>
+                <DataGridTextColumn Header="Бригада" Binding="{Binding BrigadeId}" Width="*"/>
+                <DataGridTextColumn Header="Сотрудник" Binding="{Binding FullName}" Width="*"/>
+                <DataGridTextColumn Header="Последнее обновление" Binding="{Binding LastUpdate}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Margin="5" Orientation="Horizontal">
+            <Button x:Name="Btn_AssignEmployee" Content="Назначить сотрудника" Margin="5" Width="184" Height="35" Click="Btn_AssignEmployee_Click"/>
+            <Button x:Name="Btn_AssignBrigade" Content="Назначить бригаду" Margin="5" Width="184" Height="35" Click="Btn_AssignBrigade_Click"/>
+            <Button x:Name="Btn_Update" Content="Обновить" Margin="5" Width="184" Height="35" Click="Btn_Update_Click"/>
+            <Button x:Name="Btn_Exit" Content="Выход" Margin="5" Width="184" Height="35" Click="Btn_Exit_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

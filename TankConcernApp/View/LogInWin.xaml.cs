@@ -45,6 +45,9 @@ namespace TankConcernApp
                                 adminWin.Show();
                                 break;
                             case 2:
+                                MessageBox.Show($"Добро пожаловать! Главный бригадир: {employee.LastName}");
+                                BrigadierMainWin brigadierMainWin = new BrigadierMainWin();
+                                brigadierMainWin.Show();
                                 break;
                             case 3:
                                 CheckHeadOfWorkshop(user);
