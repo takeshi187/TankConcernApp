@@ -57,6 +57,44 @@ namespace TankConcernApp.View
             }
         }
 
+        private bool EnoughInStorage(long productId, long count)
+        {
+            var requiredParts = _dbContext.TankParts
+                .Where(p => p.ProductId == productId)
+                .ToList();
+
+            if (!requiredParts.Any())
+            {
+                MessageBox.Show("Для выбранного продукта не указаны необходимые запчасти. Невозможно принять заказ.");
+                return false;
+            }
+
+            var inventory = _dbContext.PartsInventories
+                .Include(p => p.TankPart)
+                .ToList();
+
+            foreach (var part in requiredParts)
+            {
+                var inventoryItem = inventory.FirstOrDefault(i => i.TankPartId == part.TankPartId);
+                if (inventoryItem == null || inventoryItem.Count < count)
+                {
+                    MessageBox.Show("Недостаточно запчастей на складе!");
+                    return false;
+                }
+            }
+
+            foreach(var part in requiredParts)
+            {
+                var inventoryItem = inventory.First(i => i.TankPartId == part.TankPartId);
+                inventoryItem.Count -= count;
+                inventoryItem.LastUpdate = DateOnly.FromDateTime(DateTime.Now);
+            }
+
+            _dbContext.SaveChanges();
+            MessageBox.Show("Запчасти успешно списаны!");
+            return true;
+        }
+
         private void Btn_AcceptOrder_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -66,20 +104,27 @@ namespace TankConcernApp.View
                     var order = _dbContext.Orders.FirstOrDefault(o => o.OrderId == selectedOrder.OrderId);
                     if (order != null)
                     {
-                        order.OrderStatusId = 2;
-
-                        var productStage = new ProductStage
+                        if(EnoughInStorage(order.ProductId, order.Count))
                         {
-                            OrderId = order.OrderId,
-                            WorkshopId = _WorkshopId,
-                            ProductStageTypeId = 1,
-                        };
+                            order.OrderStatusId = 2;
 
-                        _dbContext.ProductStages.Add(productStage);
-                        _dbContext.SaveChanges();
+                            var productStage = new ProductStage
+                            {
+                                OrderId = order.OrderId,
+                                WorkshopId = _WorkshopId,
+                                ProductStageTypeId = 1,
+                            };
 
-                        MessageBox.Show("Заказ принят и стадия продукта создана!");
-                        LoadOrders();
+                            _dbContext.ProductStages.Add(productStage);
+                            _dbContext.SaveChanges();
+
+                            MessageBox.Show("Заказ принят и стадия продукта создана!");
+                            LoadOrders();
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                 }
                 else
