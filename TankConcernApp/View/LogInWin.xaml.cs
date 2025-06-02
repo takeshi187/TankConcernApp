@@ -27,6 +27,13 @@ namespace TankConcernApp
                 }
 
                 var user = _dbContext.Users.FirstOrDefault(u => u.Login == username && u.Password == password);
+
+                if (user == null)
+                {
+                    MessageBox.Show("Неверный логин или пароль!");
+                    return;
+                }
+
                 if (user != null)
                 {
                     var roleId = user.RoleId;
