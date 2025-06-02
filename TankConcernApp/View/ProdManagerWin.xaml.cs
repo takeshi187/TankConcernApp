@@ -18,9 +18,9 @@ namespace TankConcernApp.View
             _brigadeId = brigadeId;
             _workshopId = workshopId;
 
-            TxtBox_ManagerId.Text = _managerId.ToString();
-            TxtBox_BrigadeId.Text = _brigadeId.ToString();
-            TxtBox_WorkshopId.Text = _workshopId.ToString();
+            TxtBox_ManagerId.Text = managerId.ToString();
+            TxtBox_BrigadeId.Text = brigadeId.ToString();
+            TxtBox_WorkshopId.Text = workshopId.ToString();
 
             LoadProductStages();
             LoadProductStageTypes();

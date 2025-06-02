@@ -18,8 +18,6 @@
             <Label HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20">Менеджер по производству</Label>
         </StackPanel>
 
-        
-
         <StackPanel Grid.Row="2" Margin="5" Orientation="Horizontal">
             <Label Width="auto" Height="30" FontSize="14">id менеджера:</Label>
             <TextBox x:Name="TxtBox_ManagerId" IsReadOnly="True" Width="100" Height="30" FontSize="14"/>

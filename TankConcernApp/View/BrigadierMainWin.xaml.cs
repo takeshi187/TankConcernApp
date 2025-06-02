@@ -1,17 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TankConcernApp.database;
 
 namespace TankConcernApp.View
@@ -23,6 +11,7 @@ namespace TankConcernApp.View
         {
             InitializeComponent();
             LoadEmployeeBrigades();
+            LoadBrigadeWorkshops();
         }
 
         private void LoadEmployeeBrigades()
@@ -46,6 +35,19 @@ namespace TankConcernApp.View
             }
         }
 
+        private void LoadBrigadeWorkshops()
+        {
+            try
+            {
+                var brigadeWorkshops = _dbContext.BrigadeWorkshopAssignments.ToList();
+                DGBrigadeWorkshops.ItemsSource = brigadeWorkshops;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке бригад для цехов: {ex.Message}");
+            }
+        }
+
         private void Btn_AssignEmployee_Click(object sender, RoutedEventArgs e)
         {
             EmployeeBrigadeAssignWin employeeBrigadeAssignWin = new EmployeeBrigadeAssignWin();
@@ -54,7 +56,8 @@ namespace TankConcernApp.View
 
         private void Btn_AssignBrigade_Click(object sender, RoutedEventArgs e)
         {
-
+            BrigadeWorkshopAssignWin brigadeWorkshopAssignWin = new BrigadeWorkshopAssignWin();
+            brigadeWorkshopAssignWin.ShowDialog();
         }
 
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)
@@ -65,6 +68,7 @@ namespace TankConcernApp.View
         private void Btn_Update_Click(object sender, RoutedEventArgs e)
         {
             LoadEmployeeBrigades();
+            LoadBrigadeWorkshops();
         }
     }
 }

@@ -84,13 +84,13 @@ namespace TankConcernApp.View
                     _dbContext.SaveChanges();
                     MessageBox.Show("Запчасти успешно списаны!");
                     return true;
-                }                
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при списании деталей: {ex.Message}");
                 return false;
-            }           
+            }
         }
 
         private void Btn_AcceptOrder_Click(object sender, RoutedEventArgs e)

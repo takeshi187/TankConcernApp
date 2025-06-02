@@ -17,15 +17,29 @@
             <Label HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20">Главный бригадир</Label>
         </StackPanel>
 
-        <DataGrid x:Name="DGEmployeeBrigades" AutoGenerateColumns="False" Grid.Row="1" Margin="5" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Ebid}" Width="auto"/>
-                <DataGridTextColumn Header="Бригада" Binding="{Binding BrigadeId}" Width="*"/>
-                <DataGridTextColumn Header="Сотрудник" Binding="{Binding FullName}" Width="*"/>
-                <DataGridTextColumn Header="Последнее обновление" Binding="{Binding LastUpdate}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
+        <TabControl Grid.Row="1" Margin="5">
+            <TabItem Header="Сотрудники для бригад">
+                <DataGrid x:Name="DGEmployeeBrigades" AutoGenerateColumns="False" Grid.Row="1" Margin="5" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Ebid}" Width="auto"/>
+                        <DataGridTextColumn Header="Бригада" Binding="{Binding BrigadeId}" Width="*"/>
+                        <DataGridTextColumn Header="Сотрудник" Binding="{Binding FullName}" Width="*"/>
+                        <DataGridTextColumn Header="Последнее обновление" Binding="{Binding LastUpdate}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Бригады для цехов">
+                <DataGrid x:Name="DGBrigadeWorkshops" AutoGenerateColumns="False" Grid.Row="1" Margin="5" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id цеха" Binding="{Binding WorkshopId}" Width="*"/>
+                        <DataGridTextColumn Header="Id бригады" Binding="{Binding BrigadeId}" Width="*"/>
+                        <DataGridTextColumn Header="Дата назначения" Binding="{Binding AssignmentDate}" Width="*"/>
+                        <DataGridTextColumn Header="Дата конца" Binding="{Binding EndDate}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        
         <StackPanel Grid.Row="2" Margin="5" Orientation="Horizontal">
             <Button x:Name="Btn_AssignEmployee" Content="Назначить сотрудника" Margin="5" Width="184" Height="35" Click="Btn_AssignEmployee_Click"/>
             <Button x:Name="Btn_AssignBrigade" Content="Назначить бригаду" Margin="5" Width="184" Height="35" Click="Btn_AssignBrigade_Click"/>

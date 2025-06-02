@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using TankConcernApp.database;
 using TankConcernApp.Model;
 
-namespace TankConcernApp
+namespace TankConcernApp.View
 {
     public partial class EmployeeBrigadeAssignWin : Window
     {
@@ -50,7 +38,7 @@ namespace TankConcernApp
         {
             try
             {
-                var brigades = _dbContext.Brigades.ToList();                 
+                var brigades = _dbContext.Brigades.ToList();
                 ComboBox_Brigades.ItemsSource = brigades;
                 ComboBox_Brigades.DisplayMemberPath = "BrigadeId";
                 ComboBox_Brigades.SelectedValuePath = "BrigadeId";
@@ -65,19 +53,30 @@ namespace TankConcernApp
         {
             try
             {
-                if(ComboBox_Employees.SelectedValue is long employeeId &&
+                if (ComboBox_Employees.SelectedValue is long employeeId &&
                     ComboBox_Brigades.SelectedValue is long brigadeId)
                 {
-                    var newAssignment = new EmployeeBrigade
+                    var existingAssignment = _dbContext.EmployeeBrigades
+                        .FirstOrDefault(eb => eb.EmployeeId == employeeId);
+
+                    if (existingAssignment != null)
                     {
-                        EmployeeId = employeeId,
-                        BrigadeId = brigadeId,
-                        LastUpdate = DateOnly.FromDateTime(DateTime.Now)
-                    };
+                        existingAssignment.BrigadeId = brigadeId;
+                        existingAssignment.LastUpdate = DateOnly.FromDateTime(DateTime.Now);
+                    }
+                    else
+                    {
+                        var newAssignment = new EmployeeBrigade
+                        {
+                            EmployeeId = employeeId,
+                            BrigadeId = brigadeId,
+                            LastUpdate = DateOnly.FromDateTime(DateTime.Now)
+                        };
 
-                    _dbContext.EmployeeBrigades.Add(newAssignment);
+                        _dbContext.EmployeeBrigades.Add(newAssignment);
+                    }
+
                     _dbContext.SaveChanges();
-
                     MessageBox.Show("Сотрудник успешно назначен в бригаду!");
                 }
                 else
@@ -85,7 +84,7 @@ namespace TankConcernApp
                     MessageBox.Show("Выберите сотрудника и бригаду!");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при назначении сотрудника в бригаду: {ex.Message}");
             }
@@ -97,3 +96,4 @@ namespace TankConcernApp
         }
     }
 }
+

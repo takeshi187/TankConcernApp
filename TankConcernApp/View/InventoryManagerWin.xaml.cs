@@ -34,9 +34,9 @@ namespace TankConcernApp.View
         {
             try
             {
-                if(DGPartsInventory.SelectedItem is PartsInventory selectedInventory)
+                if (DGPartsInventory.SelectedItem is PartsInventory selectedInventory)
                 {
-                    if(long.TryParse(TxtBox_Count.Text, out var addCount) && addCount > 0)
+                    if (long.TryParse(TxtBox_Count.Text, out var addCount) && addCount > 0)
                     {
                         selectedInventory.Count += addCount;
                         selectedInventory.LastUpdate = DateOnly.FromDateTime(DateTime.Now);
@@ -54,7 +54,7 @@ namespace TankConcernApp.View
                     MessageBox.Show("Выберите запчасть для пополнения!");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при пополнении склада: {ex.Message}");
             }

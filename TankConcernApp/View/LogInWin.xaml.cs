@@ -60,6 +60,11 @@ namespace TankConcernApp
                                 InventoryManagerWin inventoryManagerWin = new InventoryManagerWin();
                                 inventoryManagerWin.Show();
                                 break;
+                            case 6:
+                                MessageBox.Show($"Добро пожаловать! Сотрудник бригады: {employee.LastName}");
+                                EmployeeWin employeeWin = new EmployeeWin(employee.EmployeeId);
+                                employeeWin.Show();
+                                break;
                             default:
                                 MessageBox.Show("Такой роли не существует!");
                                 break;

@@ -1,0 +1,32 @@
+﻿<Window x:Class="TankConcernApp.View.BrigadeWorkshopAssignWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TankConcernApp.View"
+        mc:Ignorable="d"
+        Title="Назначить бригаду на цех" Height="250" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="5">
+            <Label Content="Выберите бригаду:" Margin="5" Grid.Row="0"/>
+        </StackPanel>
+
+        <ComboBox x:Name="ComboBox_Brigades" Margin="10" Grid.Row="1"/>
+
+        <StackPanel Grid.Row="2" Margin="5">
+            <Label Content="Выберите цех:" Margin="5" Grid.Row="2"/>
+        </StackPanel>
+
+        <ComboBox x:Name="ComboBox_Workshops" Margin="10" Grid.Row="3"/>
+
+        <Button x:Name="Btn_Save" Content="Сохранить" Width="100" Click="Btn_Save_Click" Margin="5" Grid.Row="4" HorizontalAlignment="Left"/>
+        <Button x:Name="Btn_Back" Content="Назад" Width="100" Click="Btn_Back_Click" Margin="5" Grid.Row="4" HorizontalAlignment="Right"/>
+    </Grid>
+</Window>
