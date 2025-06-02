@@ -42,6 +42,5 @@
         <TextBox x:Name="TxtBox_Login" Grid.Row="3" Grid.Column="1" Height="35" Margin="10" FontSize="16"/>
         <PasswordBox x:Name="PassBox_Password" Grid.Row="4" Grid.Column="1" Height="35" Margin="10" FontSize="16"/>
         <TextBox x:Name="TxtBox_Email" Grid.Row="5" Grid.Column="1" Height="35" Margin="10" FontSize="16"/>
-        
     </Grid>
 </Window>
