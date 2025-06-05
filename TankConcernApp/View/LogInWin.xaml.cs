@@ -135,7 +135,7 @@ namespace TankConcernApp
                 }
                 else
                 {
-                    MessageBox.Show("Ошибка при авторизации workshop");
+                    MessageBox.Show("Ошибка при авторизации начальника цеха");
                 }
             }
             catch (Exception ex)
