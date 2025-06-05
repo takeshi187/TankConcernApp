@@ -56,6 +56,8 @@ namespace TankConcernApp.View
 
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)
         {
+            LogInWin logInWin = new LogInWin();
+            logInWin.Show();
             this.Close();
         }
     }
