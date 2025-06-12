@@ -82,7 +82,7 @@ namespace TankConcernApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при авторизации: ", ex.Message);
+                MessageBox.Show($"Ошибка при авторизации: {ex.Message}");
             }
         }
 
